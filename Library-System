@@ -1,0 +1,121 @@
+import java.util.*;
+class Book {
+    private String title;
+    private String author;
+    private boolean isBorrowed;
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.isBorrowed = false;
+    }
+
+    public boolean borrow() {
+        if (!isBorrowed) {
+            isBorrowed = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void returnBook() {
+        isBorrowed = false;
+    }
+
+    public String getStatus() {
+        return isBorrowed ? "Borrowed" : "Available";
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+}
+
+
+public class Day4 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Preloaded books
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(new Book("Clean Code", "Robert C. Martin"));
+        books.add(new Book("Harry Potter and the Sorcerer’s Stone", "J.K. Rowling"));
+        books.add(new Book("1984", "George Orwell"));
+
+        int choice;
+
+        do {
+            System.out.println("\n-------------------------------");
+            System.out.println("📚 Welcome to Simple Library System");
+            System.out.println("1. List all books");
+            System.out.println("2. Borrow a book");
+            System.out.println("3. Return a book");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); 
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\n📖 List of Books:");
+                    for (Book b : books) {
+                        System.out.println("- " + b.getTitle() + " by " + b.getAuthor() + " [" + b.getStatus() + "]");
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Enter book title to borrow: ");
+                    String titleToBorrow = sc.nextLine();
+                    boolean foundBorrow = false;
+
+                    for (Book b : books) {
+                        if (b.getTitle().equalsIgnoreCase(titleToBorrow)) {
+                            foundBorrow = true;
+                            if (b.borrow()) {
+                                System.out.println("✅ You borrowed: " + b.getTitle());
+                            } else {
+                                System.out.println("❌ Sorry, that book is already borrowed.");
+                            }
+                            break;
+                        }
+                    }
+                    if (!foundBorrow) {
+                        System.out.println("❌ Book not found.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Enter book title to return: ");
+                    String titleToReturn = sc.nextLine();
+                    boolean foundReturn = false;
+
+                    for (Book b : books) {
+                        if (b.getTitle().equalsIgnoreCase(titleToReturn)) {
+                            foundReturn = true;
+                            b.returnBook();
+                            System.out.println("✅ Thank you for returning: " + b.getTitle());
+                            break;
+                        }
+                    }
+                    if (!foundReturn) {
+                        System.out.println("❌ Book not found.");
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("👋 Exiting the library. Goodbye!");
+                    break;
+
+                default:
+                    System.out.println("❗ Invalid choice. Please try again.");
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
