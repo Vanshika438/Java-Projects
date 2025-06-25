@@ -1,0 +1,108 @@
+import java.util.*;
+
+class Movie {
+    private String name;
+    private String genre;
+    private int seatsAvailable;
+
+    Movie(String name, String genre, int seatsAvailable) {
+        this.name = name;
+        this.genre = genre;
+        this.seatsAvailable = seatsAvailable;
+    }
+
+    public void bookSeats() {
+        seatsAvailable--;
+    }
+
+    public void cancelSeats() {
+        seatsAvailable++;
+    }
+
+    public void getDetails() {
+        System.out.println(name + " " + genre + " " + seatsAvailable);
+    }
+
+    public String getMovieName() {
+        return name;
+    }
+
+    public String getMovieGenre() {
+        return genre;
+    }
+
+    public int getAvailableSeats() {
+        return seatsAvailable;
+    }
+
+}
+
+public class Day4C {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Movie> movies = new ArrayList<>();
+
+        ArrayList<String> userBookings = new ArrayList<>();
+
+        movies.add(new Movie("Inception", "Sci-fi", 5));
+        movies.add(new Movie("Titanic", "Romance", 3));
+        movies.add(new Movie("Avengers", "Action", 10));
+        int choice;
+
+        do {
+            System.out.println("\n---------------------------------------");
+            System.out.println(
+                    "🎬 Welcome to Movie Booking System\n1. View Movies\n2. Book a Ticket\n3. Cancel a Booking\n4. View Bookings\n5. Exit");
+            System.out.println("Enter your choice");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    for (Movie M : movies) {
+                        System.out
+                                .println(M.getMovieName() + " , " + M.getMovieGenre() + " , " + M.getAvailableSeats());
+                    }
+                    break;
+                case 2:
+                    System.out.println("\nEnter Movie name to book");
+                    String movieNameToBook = sc.nextLine();
+                    for (Movie M : movies) {
+                        if (movieNameToBook.equalsIgnoreCase(M.getMovieName()) && !userBookings.contains(movieNameToBook)) {
+                            if (M.getAvailableSeats() != 0) {
+                                M.bookSeats();
+                                System.out.println("✅ Ticket booked for " + movieNameToBook);
+                                userBookings.add(movieNameToBook);
+                            } else {
+                                System.out.println("Seats not Available");
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.println("\nEnter Moive name to Cancel");
+                    String movieNameToCancel = sc.nextLine();
+                    for (Movie M : movies) {
+                        if (movieNameToCancel.equalsIgnoreCase(M.getMovieName())&& userBookings.contains(movieNameToCancel)) {
+                            M.cancelSeats();
+                            userBookings.remove(movieNameToCancel);
+                            System.out.println("Tickets Cancelled for "+movieNameToCancel);
+                        }
+                    }
+                    break;
+                case 4:
+                    for (String s : userBookings) {
+                        System.out.println(s);
+                    }
+                    break;
+                case 5:
+                    System.out.println("Exitting.....");
+                    break;
+                default:
+                    break;
+            }
+
+        } while (choice != 5);
+        sc.close();
+    }
+}
