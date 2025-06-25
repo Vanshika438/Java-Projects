@@ -1,0 +1,90 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Day6C {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        HashMap<String, Integer> userPins = new HashMap<>();
+        userPins.put("Vanshika", 1234);
+        userPins.put("arjun", 4321);
+        userPins.put("neha", 1111);
+        userPins.put("rahul", 9999);
+        userPins.put("admin", 3300);
+
+        HashMap<String, Integer> userBalances = new HashMap<>();
+        userBalances.put("Vanshika", 5000);
+        userBalances.put("arjun", 3000);
+        userBalances.put("neha", 10000);
+        userBalances.put("rahul", 7000);
+        userBalances.put("admin", 20000);
+
+        int choice;
+        int attempt = 3;
+        boolean isLoggedIn = false;
+        do {
+            System.out.println("------Login-------");
+            System.out.print("Enter your name: ");
+            String userName = sc.nextLine();
+            if (userPins.containsKey(userName)) {
+                System.out.print("Enter your pin: ");
+                int userPin = sc.nextInt();
+                sc.nextLine();
+                if (userPins.get(userName) == userPin) {
+                    isLoggedIn = true;
+                    System.out.println("Logged In Successfully");
+                    do {
+                        System.out.println("----------------------------------------");
+                        System.out.println("Welcome " + userName);
+                        System.out.println("1. Check Balance\n2. Deposit\n3. Withdraw\n4. Exit");
+                        System.out.print("Enter Your Choice:");
+                        choice = sc.nextInt();
+                        sc.nextLine();
+                        switch (choice) {
+                            case 1:
+                                System.out.println(userName + " your Balance is " + userBalances.get(userName));
+                                break;
+                            case 2:
+                                System.out.print("Enter Amount to Deposit: ");
+                                int amtToDeposit = sc.nextInt();
+                                sc.nextLine();
+                                if (amtToDeposit > 0) {
+                                    userBalances.put(userName, userBalances.get(userName) + amtToDeposit);
+                                    System.out.println("Amount Deposit Successfully");
+                                } else {
+                                    System.out.println("Enter Valid Amount");
+                                }
+                                break;
+                            case 3:
+                                System.out.print("Enter Amount to Withdraw: ");
+                                int amtToWithdraw = sc.nextInt();
+                                sc.nextLine();
+                                if (amtToWithdraw <= userBalances.get(userName) && amtToWithdraw>0) {
+                                    userBalances.put(userName, userBalances.get(userName) - amtToWithdraw);
+                                    System.out.println("Amount Withdraw Successfully");
+                                } else {
+                                    System.out.println("Insufficient Balance");
+                                }
+                                break;
+                            case 4:
+                                System.out.println("Exitting....");
+                                break;
+                            default:
+                            System.out.println("Invalid choice");
+                                break;
+                        }
+
+                    } while (choice != 4);
+                } else {
+                    attempt--;
+                    System.out.println("Incorrect pin");
+                    System.out.println("Try Again");
+                }
+            } else {
+                System.out.println("User Does Not Exist");
+            }
+        } while (attempt > 0 && isLoggedIn == false);
+
+        sc.close();
+    }
+}
