@@ -1,0 +1,31 @@
+import java.util.*;
+
+public class Day2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter your age: ");
+        int age = sc.nextInt();
+        sc.nextLine();
+        System.out.print("Enter your favorite genre: ");
+        String gen = sc.nextLine();
+        System.out.print("Do you prefer watching with family? ");
+        String withFamily = sc.next();
+
+        if (age < 13 && withFamily.equalsIgnoreCase("yes")) {
+            System.out.println(">> You might enjoy watching: Finding Nemo");
+        } 
+        else if (age >= 13 && gen.equalsIgnoreCase("Action")) {
+            System.out.println(">> You might enjoy watching: Avengers: Endgame");
+        } 
+        else if (gen.equalsIgnoreCase("Romance") && withFamily.equalsIgnoreCase("no")) {
+            System.out.println(">> You might enjoy watching: The Notebook");
+        } 
+        else if (gen.equalsIgnoreCase("horror") && age >= 18) {
+            System.out.println(">> You might enjoy watching: Conjuring");
+        } 
+        else {
+            System.out.println(">> You might enjoy watching: Inception");
+        }
+        sc.close();
+    }
+}
