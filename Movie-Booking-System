@@ -37,7 +37,7 @@ class Movie {
 
 }
 
-public class Day4C {
+public class MovieBooking {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Movie> movies = new ArrayList<>();
