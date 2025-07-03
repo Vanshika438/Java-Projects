@@ -56,7 +56,7 @@ class Student {
 
 }
 
-public class Day5 {
+public class StudentReportCard {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Student> students = new ArrayList<>();
